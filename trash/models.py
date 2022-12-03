@@ -1,6 +1,8 @@
 import json
 
 import uuid as uuid
+
+from colorfield.fields import ColorField
 from django.db import models
 from django.utils import timezone
 
@@ -8,8 +10,9 @@ from trash.services.city import CityService
 
 
 class TrashType(models.Model):
+    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True)
     name = models.CharField(max_length=50)
-    color = models.CharField(max_length=10)
+    color = ColorField(default='#FF0000')
 
 
 class TrashTag(models.Model):
@@ -18,7 +21,8 @@ class TrashTag(models.Model):
 
 
 class Trash(models.Model):
-    coordinates = models.CharField(max_length=100)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
     uuid = models.UUIDField(default=uuid.uuid4)
     type = models.ForeignKey(TrashType, on_delete=models.CASCADE)
 

@@ -35,10 +35,10 @@ class AddRetrainQueue(TemplateView):
     def post(self, request, *args, **kwargs):
         image = request.POST.get('image', None)
         tag = request.POST.get('tag', None)
-        if image is not None and tag is not None:
+        if image is not None and tag is not None and tag in DiscoService().get_all_tags():
             WrongAnswer(image=str(image), tag=tag).save()
             self.update_attempts()
-            return redirect(reverse('url-result') + '?tag=%s' % tag)
+            return redirect(reverse('scan_qr') + '?tag=%s' % tag)
         return HttpResponse(status=400)
 
 
