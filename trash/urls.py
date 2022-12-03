@@ -18,5 +18,5 @@ from django.urls import path
 from trash import views
 
 urlpatterns = [
-    path('', views)
+    path('', views.ScanTrash.as_view())
 ]
