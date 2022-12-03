@@ -10,3 +10,4 @@ class CityService(metaclass=Singleton):
     def send_signal_to_trash(self, trash):
         logger = logging.getLogger(__name__)
         logger.info('Trash %s opened' % trash.get_uuid())
+        print('Trash %s opened' % trash.get_uuid())

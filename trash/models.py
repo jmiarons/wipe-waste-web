@@ -14,6 +14,9 @@ class TrashType(models.Model):
     name = models.CharField(max_length=50)
     color = ColorField(default='#FF0000')
 
+    def get_uuid(self):
+        return str(self.uuid)
+
 
 class TrashTag(models.Model):
     name = models.CharField(max_length=50)
@@ -42,15 +45,19 @@ class TrashUsed(models.Model):
     @classmethod
     def create_from_qr(cls, qr_code, id_card):
         try:
-            data = json.load(qr_code)
+            data = json.loads(qr_code)
             trash_uuid = data['uuid']
             trash = Trash.objects.get(uuid=trash_uuid)
+            if trash.type.get_uuid() != data['type']:
+                return 'Incorrect type'
             user = User.objects.get(id_card=id_card)
-        except:
-            return False
+        except (json.JSONDecodeError, KeyError, Trash.DoesNotExist):
+            return 'QR not valid'
+        except User.DoesNotExist:
+            return 'Id card not registered'
         CityService().send_signal_to_trash(trash)
         cls(user=user, trash=trash).save()
-        return True
+        return False
 
 
 class WrongAnswer(models.Model):
