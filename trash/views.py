@@ -4,7 +4,7 @@ from trash.services.disco import DiscoService
 
 
 class ScanTrash(TemplateView):
-    template_name = ''
+    template_name = 'home.html'
 
     def post(self, request, *args, **kwargs):
         image = request.POST.get('image', None)

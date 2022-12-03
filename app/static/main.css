@@ -29,3 +29,16 @@
     backdrop-filter: blur(2px);
     cursor: pointer;
 }
+
+.form-center {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: center;
+}
+
+.top-margin {
+    margin-top: 1%;
+}
