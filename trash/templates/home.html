@@ -30,13 +30,13 @@
         <div class="type-buttons">
             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Wrong?</button>
 
-            <button type="button" class="btn btn-primary">Next</button>
+            <a href="{% url "scan_qr" %}?tag={{ trash_type.get_uuid }}" type="button" class="btn btn-primary">Next</a>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <!-- TODO action-->
-                <form id="correct-type" action="" method="post">
+                <form id="correct-type" action="{% url "wrong_path" %}" method="post">
                     <div class="modal-header">
                         <h5 class="modal-title fs-5" id="exampleModalLabel">Select correct type</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
