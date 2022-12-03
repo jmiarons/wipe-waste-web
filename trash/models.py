@@ -4,18 +4,17 @@ import uuid as uuid
 from django.db import models
 from django.utils import timezone
 
+from trash.services.city import CityService
+
 
 class TrashType(models.Model):
+    name = models.CharField(max_length=50)
     color = models.CharField(max_length=10)
-    tags_data = models.TextField()
 
-    @property
-    def tags(self) -> list:
-        return json.load(self.tags_data)
 
-    @tags.setter
-    def tags_setter(self, value: list):
-        self.tags_data = json.dumps(value)
+class TrashTag(models.Model):
+    name = models.CharField(max_length=50)
+    trash_type = models.ForeignKey(TrashType, on_delete=models.CASCADE)
 
 
 class Trash(models.Model):
@@ -35,10 +34,21 @@ class TrashUsed(models.Model):
     time = models.DateTimeField(default=timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     trash = models.ForeignKey(Trash, on_delete=models.SET_NULL, null=True)
-    uuid = models.UUIDField(default=uuid.uuid4, primary_key=True)
-    ongoing = models.BooleanField()
+
+    @classmethod
+    def create_from_qr(cls, qr_code, id_card):
+        try:
+            data = json.load(qr_code)
+            trash_uuid = data['uuid']
+            trash = Trash.objects.get(uuid=trash_uuid)
+            user = User.objects.get(id_card=id_card)
+        except:
+            return False
+        CityService().send_signal_to_trash(trash)
+        cls(user=user, trash=trash).save()
+        return True
 
 
-class WrongAnswers(models.Model):
+class WrongAnswer(models.Model):
     image = models.TextField()
     tag = models.CharField(max_length=100)
