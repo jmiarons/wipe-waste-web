@@ -20,6 +20,7 @@
         <div class="col-12 col-lg-8">
             <video id="qr-video" style="width: 100%; height: 100%; display: none"></video>
             <form id="form" class="m-4" method="post">
+                <div id="error" class="alert alert-danger" style="display: none" role="alert">Not the right container</div>
                 {% if error is not None %}
                     <div class="alert alert-danger" role="alert">{{ error }}</div>
                 {% endif %}
@@ -40,11 +41,14 @@
             let scanner = new Scanner('qr-video', (content) => {
                 if (content.data) {
                     let result = JSON.parse(content.data);
-                    console.log(result)
                     if (result.type === urlParams.get('tag')) {
                         scanner.stop()
                         $('input[name="qr_code"]').val(content.data)
                         $('#form').submit()
+                    } else {
+                        $('#error').show()
+                        scanner.stop()
+                        scanner.hide()
                     }
                 }
             }, {
