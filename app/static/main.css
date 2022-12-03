@@ -6,6 +6,7 @@
     height: 100%;
     display: none;
     z-index: 1251;
+    background: white;
 }
 
 .scan-region-highlight {
