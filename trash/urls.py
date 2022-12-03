@@ -18,5 +18,7 @@ from django.urls import path
 from trash import views
 
 urlpatterns = [
-    path('', views.ScanTrash.as_view())
+    path('', views.ScanTrash.as_view(), name='home'),
+    path('wrong_tag/', views.AddRetrainQueue.as_view(), name='wrong_path'),
+    path('scan_qr/', views.ScanTrashContainer.as_view(), name='scan_qr'),
 ]
