@@ -115,6 +115,7 @@ Scanner.prototype.addPhotoToForm = function (triggerId, inputId, reloadId=null) 
         self.scanner.stop()
         if (pause) {
             $(video).css("background-image", "url(" + self.canvas.toDataURL("image/png") + ")").css('background-size', 'cover')
+        } else {
         }
     }
     let trigger = $(`#${triggerId}`)
