@@ -27,15 +27,51 @@
                 {% csrf_token %}
                 <input type="hidden" name="qr_code"/>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Id card</label>
-                    <input type="text" class="form-control" name="id_card">
+                    <label for="exampleInputEmail1" class="form-label">Id card number</label>
+                    <input type="text" class="form-control" name="id_card" onkeyup="input_change(this)">
                 </div>
-                <button id="button_open" type="button" class="btn btn-primary col-12">Scan container <i class="bi bi-qr-code-scan"></i></button>
+                <div id="scanner-nfc">
+                    <label for="exampleInputEmail1" class="form-label">Card NFC <i class="bi bi-credit-card-2-front-fill"></i></label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" name="serial_number" disabled aria-describedby="button-addon2">
+                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">Scan card</button>
+                    </div>
+                </div>
+                <button disabled id="button_open" type="button" class="btn btn-primary col-12">Scan container <i class="bi bi-qr-code-scan"></i></button>
             </form>
         </div>
     </div>
     <script>
+        function input_change(div) {
+            if (div.value !== '' || $('input[name="serial_number"]').val() !== '') {
+                $('#button_open').prop( "disabled", false);
+            } else {
+                $('#button_open').prop( "disabled", true);
+            }
+        }
         $(document).ready(()=> {
+            if (!('NDEFReader' in Window)) {
+                $('#scanner-nfc').hide()
+            } else {
+                let input = $('input[name="serial_number"]')
+                $('#button-addon2').click(async () => {
+                    try {
+                        const ndef = new NDEFReader();
+                        await ndef.scan();
+
+                        ndef.addEventListener("readingerror", () => {
+                            console.log("Argh! Cannot read data from the NFC tag. Try another one?");
+                        });
+
+                        ndef.addEventListener("reading", ({ _, serialNumber }) => {
+                            input.val(serialNumber.toString())
+                            input_change(input[0])
+                        });
+                    } catch (error) {
+                    }
+                })
+            }
+
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             let scanner = new Scanner('qr-video', (content) => {

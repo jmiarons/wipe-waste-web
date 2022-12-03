@@ -16,33 +16,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body>
-{% if tag is None %}
-    <form id="form" class="form-center" method="post" enctype="multipart/form-data">
+{% if trash_type is None %}
+    <form id="form" class="form-center m-4" method="post" enctype="multipart/form-data">
+        <h3>Upload a photo of the trash you want to throw to a container</h3>
         {% csrf_token %}
-        <input type="file" class="form-control top-margin" id="mypic" accept="image/*" capture="camera">
+        <input type="file" name="image" class="form-control top-margin" id="mypic" accept="image/*" capture="camera">
         <br>
         <input class="btn btn-primary top-margin" type="submit" id="submit-button" value="Foto">
     </form>
 {% else %}
     <div class="type-main m-2">
-        <img src="data:image/png;base64,{{ image }}">
-        <h3 style="text-align: center">Recycling to: {{ trash_type.name }}</h3>
+        <img src="data:image/png;base64,{{ image }}" style="max-width: 500px; width: 100%; margin: auto">
+        <h3 class="mt-2" style="text-align: center">Recycling to: {{ trash_type.name }}</h3>
+        <div class="mb-2" style="height: 100px; width: 100px; background: url({% static 'img/trash.png' %}) no-repeat, {{ trash_type.color }}; background-size: 100% 100%; margin: auto"></div>
         <div class="type-buttons">
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Wrong?</button>
+            <button type="button" class="btn btn-danger col-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Wrong?</button>
 
-            <a href="{% url "scan_qr" %}?tag={{ trash_type.get_uuid }}" type="button" class="btn btn-primary">Next</a>
+            <a href="{% url "scan_qr" %}?tag={{ trash_type.get_uuid }}" type="button" class="btn btn-primary col-4">Next</a>
         </div>
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <!-- TODO action-->
                 <form id="correct-type" action="{% url "wrong_path" %}" method="post">
+                    {% csrf_token %}
+                    <input name="image" type="hidden" value="{{ image }}">
                     <div class="modal-header">
                         <h5 class="modal-title fs-5" id="exampleModalLabel">Select correct type</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <select class="form-select" aria-label="Default select example">
+                        <select class="form-select" name="tag" aria-label="Default select example">
                             {% for item in possible_tags %}
                                 <option value="{{ item }}">{{ item }}</option>
                             {% endfor %}
