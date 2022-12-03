@@ -20,4 +20,5 @@ from trash import views
 urlpatterns = [
     path('', views.ScanTrash.as_view(), namespace='home'),
     path('wrong_tag', views.ScanTrash.as_view(), namespace='wrong_path'),
+    path('scan_qr', views.ScanTrash.as_view(), namespace='scan_qr'),
 ]

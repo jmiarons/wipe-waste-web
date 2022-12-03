@@ -43,6 +43,8 @@ class AddRetrainQueue(TemplateView):
 
 
 class ScanTrashContainer(TemplateView):
+    template_name = 'scan_container.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tag = self.request.GET.get('tag', None)
