@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib import admin
 from django.forms import ModelForm
+from django.template.loader import render_to_string
 
 from trash import models
 from trash.services.disco import DiscoService
@@ -29,7 +30,14 @@ class TrashTypeAdmin(admin.ModelAdmin):
     ]
 
 
+class TrashAdmin(admin.ModelAdmin):
+    def generate_qr(self, obj):
+        return render_to_string(template_name='admin_qr_button.html', context={'obj': obj})
+
+    list_display = ('__str__', 'generate_qr')
+
+
 admin.site.register(models.TrashType, TrashTypeAdmin)
-admin.site.register(models.Trash)
+admin.site.register(models.Trash, TrashAdmin)
 admin.site.register(models.User)
 admin.site.register(models.WrongAnswer)

@@ -37,13 +37,19 @@ class Trash(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4)
     type = models.ForeignKey(TrashType, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return '%s - %s - %s' % (self.type.name, self.latitude, self.longitude)
+
     def get_uuid(self):
         return str(self.uuid)
+
+    def get_qr_code(self):
+        return json.dumps({'uuid': self.get_uuid(), 'type': self.type.get_uuid()}).replace(' ', '')
 
 
 class User(models.Model):
     id_card = models.CharField(max_length=20, unique=True)
-    serial_number = models.CharField(max_length=50, unique=True)
+    serial_number = models.CharField(max_length=50, null=True, blank=True)
 
 
 class TrashUsed(models.Model):
