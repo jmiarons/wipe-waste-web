@@ -15,7 +15,7 @@ class DiscoService(metaclass=Singleton):
         return self.get_all_tags()[index]
 
     def get_tag_from_image(self, image):
-        url = 'http://localhost:9002/files'
+        url = 'http://localhost:9002/tagImage'
         headers = {
             # requests won't add a boundary if this header is set when you pass files=
             # 'Content-Type': 'multipart/form-data',
