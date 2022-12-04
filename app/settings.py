@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_crontab',
     'colorfield',
     'trash',
 ]
@@ -130,6 +131,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': '/var/tmp/django_cache',
+        'LOCATION': BASE_DIR / 'cache',
     }
 }
+
+
+CRONJOBS = [
+    ('0   4 * * *', 'django.core.management.call_command', ['train_model']),
+]

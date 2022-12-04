@@ -33,8 +33,8 @@ class ScanTrash(TemplateView):
 
 class AddRetrainQueue(View):
     def update_attempts(self):
-        cache.set('success_attempts', min(cache.get('success_attempts', 0) - 1, 0))
-        cache.set('failed_attempts', min(cache.get('failed_attempts', 0) + 1, 0))
+        cache.set('success_attempts', max(cache.get('success_attempts', 0) - 1, 0))
+        cache.set('failed_attempts', max(cache.get('failed_attempts', 0) + 1, 0))
 
     def post(self, request, *args, **kwargs):
         image = request.POST.get('image', None)
