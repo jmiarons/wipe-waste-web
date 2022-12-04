@@ -56,15 +56,17 @@ class ScanTrashContainer(TemplateView):
         if tag is None:
             raise Http404()
         context.update({'tag': tag})
+        trash_type = get_object_or_404(TrashType, uuid=tag)
+        context.update({'trash_type': trash_type})
         return context
 
     def get_user(self):
         id_card = self.request.POST.get('id_card', None)
         serial_number = self.request.POST.get('serial_number', None)
         try:
-            if id_card is not None:
+            if id_card:
                 return User.objects.get(id_card=id_card)
-            if serial_number is not None:
+            if serial_number:
                 return User.objects.get(serial_number=serial_number)
         except User.DoesNotExist:
             pass

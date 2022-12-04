@@ -21,7 +21,7 @@
     <form id="form" class="form-center m-4" method="post" enctype="multipart/form-data">
         <h3>Upload a photo of the trash you want to throw to a container</h3>
         {% csrf_token %}
-        <input type="file" name="image" class="form-control top-margin" id="mypic" accept="image/*" capture="camera">
+        <input type="file" name="image" class="form-control top-margin" id="mypic" accept="image/jpeg" capture="camera">
         <br>
         <input class="btn btn-primary top-margin" type="submit" id="submit-button" value="Upload">
     </form>
