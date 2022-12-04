@@ -14,7 +14,7 @@ class DiscoService(metaclass=Singleton):
         return self.get_all_tags()[index]
 
     def get_tag_from_image(self, image):
-        pass
+        return 'Plastic'
 
     def retrain_from_data(self, image_list, tag_list):
         pass
