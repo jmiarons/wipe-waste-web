@@ -50,7 +50,7 @@
             }
         }
         $(document).ready(()=> {
-            if (!('NDEFReader' in Window)) {
+            if (!('NDEFReader' in window)) {
                 $('#scanner-nfc').hide()
             } else {
                 let input = $('input[name="serial_number"]')
