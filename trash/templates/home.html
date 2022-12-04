@@ -37,7 +37,6 @@
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                <!-- TODO action-->
                 <form id="correct-type" action="{% url "wrong_path" %}" method="post">
                     {% csrf_token %}
                     <input name="image" type="hidden" value="{{ image }}">
@@ -61,7 +60,6 @@
             </div>
         </div>
     </div>
-    {{ tag }}
 {% endif %}
 </body>
 </html>
