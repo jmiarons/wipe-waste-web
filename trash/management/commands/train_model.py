@@ -19,5 +19,7 @@ class Command(BaseCommand):
                 tags.append(item.tag)
             DiscoService().retrain_from_data(images, tags)
             queryset.delete()
+            cache.set('success_attempts', 0)
+            cache.set('failed_attempts', 0)
             self.stdout.write(self.style.SUCCESS('Retrained model with %s' % len(tags)))
         self.stdout.write(self.style.SUCCESS('No retrain needed'))
