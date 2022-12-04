@@ -1,6 +1,5 @@
+import requests
 from app.patterns import Singleton
-import requests, json
-
 
 class DiscoService(metaclass=Singleton):
     def __init__(self) -> None:
