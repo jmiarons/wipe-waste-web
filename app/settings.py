@@ -139,3 +139,5 @@ CACHES = {
 CRONJOBS = [
     ('0   4 * * *', 'django.core.management.call_command', ['train_model']),
 ]
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 134200000
