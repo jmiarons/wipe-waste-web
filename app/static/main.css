@@ -61,3 +61,13 @@
 	align-items: center;
 	align-content: flex-end;
 }
+
+.last-button {
+    width: 100%;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: stretch;
+	align-content: stretch;
+}

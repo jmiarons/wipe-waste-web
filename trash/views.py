@@ -83,7 +83,7 @@ class ScanTrashContainer(TemplateView):
             else:
                 context.update({'success': True})
         elif user is None:
-            context.update({'error': 'Id card not registered'})
+            context.update({'error': 'User is not registered'})
         else:
             context.update({'error': 'The container did not exist'})
         return self.render_to_response(context)
