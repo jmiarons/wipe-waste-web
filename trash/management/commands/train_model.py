@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         success = cache.get('success_attempts', 0)
         failed = cache.get('failed_attempts', 0)
-        if failed / (success + failed) > 0.25:
+        if failed / max(success + failed, 1) > 0.25:
             queryset = WrongAnswer.objects.all()
             images = tags = []
             for item in queryset:
