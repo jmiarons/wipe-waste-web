@@ -1,13 +1,14 @@
 import base64
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.cache import cache
 from django.http import HttpResponse, Http404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.generic import TemplateView
 
-from trash.models import WrongAnswer, TrashUsed, TrashType, User
+from trash.models import WrongAnswer, TrashUsed, TrashType, User, Trash
 from trash.services.disco import DiscoService
 
 
@@ -84,3 +85,13 @@ class ScanTrashContainer(TemplateView):
         else:
             context.update({'error': 'The container did not exist'})
         return self.render_to_response(context)
+
+
+class QRGeneratorView(LoginRequiredMixin, TemplateView):
+    template_name = 'QRCode.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        trash = get_object_or_404(Trash, uuid=self.request.GET.get('trash'))
+        context.update({'trash': trash})
+        return context

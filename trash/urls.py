@@ -21,4 +21,5 @@ urlpatterns = [
     path('', views.ScanTrash.as_view(), name='home'),
     path('wrong_tag/', views.AddRetrainQueue.as_view(), name='wrong_path'),
     path('scan_qr/', views.ScanTrashContainer.as_view(), name='scan_qr'),
+    path('qr_generator/', views.QRGeneratorView.as_view(), name='qr_generator'),
 ]
