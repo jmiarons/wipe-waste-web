@@ -1,0 +1,1 @@
+export { IndexedDB } from './memory'

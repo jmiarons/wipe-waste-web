@@ -1,0 +1,20 @@
+{
+  "name": "@epfml/discojs",
+  "version": "2.1.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "cp ./src/core/index.browser.ts ./src/core/index.ts && tsc",
+    "build-win": "copy ..\\discojs-core\\src\\index.node.ts ..\\discojs-core\\src\\index.ts && tsc",
+    "test": "cp ./src/core/index.node.ts ./src/core/index.ts && mocha",
+    "lint": "cp ./src/core/index.browser.ts ./src/core/index.ts && npx eslint --max-warnings 0 --ignore-pattern '*.spec.ts' --ignore-pattern 'src/core' ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epfml/disco.git"
+  },
+  "bugs": {
+    "url": "https://github.com/epfml/disco/issues"
+  },
+  "homepage": "https://github.com/epfml/disco#readme"
+}

@@ -1,0 +1,17 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.geotags = exports.simpleFace = exports.trash = exports.titanic = exports.mnist = exports.lusCovid = exports.cifar10 = void 0;
+var cifar10_1 = require("./cifar10");
+Object.defineProperty(exports, "cifar10", { enumerable: true, get: function () { return cifar10_1.cifar10; } });
+var lus_covid_1 = require("./lus_covid");
+Object.defineProperty(exports, "lusCovid", { enumerable: true, get: function () { return lus_covid_1.lusCovid; } });
+var mnist_1 = require("./mnist");
+Object.defineProperty(exports, "mnist", { enumerable: true, get: function () { return mnist_1.mnist; } });
+var titanic_1 = require("./titanic");
+Object.defineProperty(exports, "titanic", { enumerable: true, get: function () { return titanic_1.titanic; } });
+var trash_1 = require("./trash");
+Object.defineProperty(exports, "trash", { enumerable: true, get: function () { return trash_1.trash; } });
+var simple_face_1 = require("./simple_face");
+Object.defineProperty(exports, "simpleFace", { enumerable: true, get: function () { return simple_face_1.simpleFace; } });
+var geotags_1 = require("./geotags");
+Object.defineProperty(exports, "geotags", { enumerable: true, get: function () { return geotags_1.geotags; } });

@@ -1,0 +1,31 @@
+import { List } from 'immutable';
+import { Task } from '../../task';
+import { GraphInformant } from '../graph_informant';
+export declare abstract class Base {
+    readonly task: Task;
+    private readonly nbrMessagesToShow;
+    private messages;
+    protected readonly trainingGraphInformant: GraphInformant;
+    protected readonly validationGraphInformant: GraphInformant;
+    protected currentRound: number;
+    protected currentNumberOfParticipants: number;
+    protected totalNumberOfParticipants: number;
+    protected averageNumberOfParticipants: number;
+    constructor(task: Task, nbrMessagesToShow?: number);
+    abstract update(statistics: Record<string, number>): void;
+    addMessage(msg: string): void;
+    getMessages(): string[];
+    round(): number;
+    participants(): number;
+    totalParticipants(): number;
+    averageParticipants(): number;
+    updateTrainingGraph(accuracy: number): void;
+    updateValidationGraph(accuracy: number): void;
+    trainingAccuracy(): number;
+    validationAccuracy(): number;
+    trainingAccuracyData(): List<number>;
+    validationAccuracyData(): List<number>;
+    isDecentralized(): boolean;
+    isFederated(): boolean;
+    static isTrainingInformant(raw: unknown): raw is Base;
+}
